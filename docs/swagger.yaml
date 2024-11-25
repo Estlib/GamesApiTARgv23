@@ -1,0 +1,76 @@
+openapi: 3.0.2
+info:
+    title: TARgv23GameApi
+    version: 1.0.0
+    description: see all da gaem
+paths:
+    /games:
+        get:
+            tags:
+                - games
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of games:
+                                    value:
+                                        - Wither 3
+                                        - CyberPunk 2077
+                    description: Returns a list of Games
+            summary: Get a list of all games
+            description: Returns a list of all games in the api
+    '/games/{id}':
+        get:
+            tags:
+                - games
+            parameters:
+                -
+                    examples:
+                        example id:
+                            value:
+                                - 8
+                    name: id
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Game with details:
+                                    value:
+                                        id: 2
+                                        name: Sonic the Hedgehog
+                                        releaseEU: '1991'
+                                        description: Speedy blue platformer
+                                        reviewscore: 77
+                    description: Returns details of a game by its id
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing game:
+                                    value:
+                                        Error: Game not found
+                    description: Game was not found in array of games
+            operationId: id
+            summary: Get full details of a Game
+            description: Return full details of a given Game based on the id
+components:
+    schemas:
+        error:
+            description: "{\r\n  \"Error\": \"error message\"\r\n}"
+            type: object
