@@ -24,6 +24,39 @@ paths:
                     description: Returns a list of Games
             summary: Get a list of all games
             description: Returns a list of all games in the api
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Game'
+                        examples:
+                            Example of a game:
+                                value:
+                                    name: Super Mario Bros.
+                                    releaseEU: '1985'
+                                    description: italian spaghetti gaem
+                                    reviewscore: '78'
+                required: true
+            tags:
+                - games
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Game'
+                            examples:
+                                Example of a game:
+                                    value:
+                                        id: 5
+                                        name: Super Mario Bros.
+                                        releaseEU: '1985'
+                                        description: italian spaghetti gaem
+                                        reviewscore: '78'
+                    description: Return 201 to user when creation of new Game is successful
+            summary: Add a new Game
+            description: 'Returns the created Game to the user, if creation is successful'
     '/games/{id}':
         get:
             tags:
@@ -56,6 +89,16 @@ paths:
                                         description: Speedy blue platformer
                                         reviewscore: 77
                     description: Returns details of a game by its id
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        Error: invalid game id
+                    description: ID was missing
                 '404':
                     content:
                         application/json:
@@ -74,3 +117,21 @@ components:
         error:
             description: "{\r\n  \"Error\": \"error message\"\r\n}"
             type: object
+        Game:
+            title: Root Type for Game
+            description: Data of Game datatype
+            type: object
+            properties:
+                name:
+                    type: string
+                releaseEU:
+                    type: string
+                description:
+                    type: string
+                reviewscore:
+                    type: string
+            example:
+                name: Super Mario Bros.
+                releaseEU: '1985'
+                description: italian spaghetti gaem
+                reviewscore: '78'
