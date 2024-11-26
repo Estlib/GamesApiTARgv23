@@ -70,7 +70,17 @@ app.post('/games', (req, res) => {
     .send(game);
 })
 
+app.delete('/games/:id', (req, res) => {
+    if(typeof games[req.params.id-1] === 'undefined')
+    {
+        return res.status(404).send({Error: 'Game not found'});
+    }
 
+    games.splice(req.params.id-1, 1);
+
+    res.status(204).send({Error: 'No Content'});
+
+})
 
 app.listen(port, () => {console.log(`Backend api jookseb aadressil: http://localhost:${port}`);});
 
