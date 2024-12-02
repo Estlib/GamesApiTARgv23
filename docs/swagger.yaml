@@ -150,6 +150,7 @@ paths:
                                             error: game was not found
                     description: 'Return status code 404 to the user, if game with this id does not exist'
             operationId: id
+            summary: delete by id
             description: Delete a game with this id
 components:
     schemas:

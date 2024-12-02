@@ -49,6 +49,27 @@ app.get('/games/:id', (req, res) => {
     res.send(games[req.params.id-1]);
 })
 
+app.put('/games/:id', (req, res) => {
+    const game = getGame(req, res);
+    if(!game) {return}
+    if (!req.body.name || 
+        !req.body.releaseEU || 
+        !req.body.description || 
+        !req.body.reviewscore) 
+        {
+            return res.status(400).send({error: 'Missing game parameters'});
+        }
+        
+    game.name = req.body.name;
+    game.releaseEU = req.body.releaseEU;
+    game.description = req.body.description;
+    game.reviewscore = req.body.reviewscore;
+    return res
+    .status(200)
+    .location(`${getBaseUrl(req)}/games/${game.id}`)
+    .send(game);
+})
+
 app.post('/games', (req, res) => {
     if (!req.body.name || 
         !req.body.releaseEU || 
@@ -86,4 +107,18 @@ app.listen(port, () => {console.log(`Backend api jookseb aadressil: http://local
 
 function getBaseUrl(req) {
     return req.connection && req.connection.encrypted ? "https" : "http" + `://${req.headers.host}`;
+}
+function getGame(req,res) 
+{
+    const idNumber = parseInt(req.params.id);
+    if(isNaN(idNumber)) {
+        res.status(400).send({Error:`Game not found!`});
+        return null;
+    }
+    const game = games.find(game => game.id === idNumber)
+    if(!game) {
+        res.status(404).send({Error: 'Game not found'});
+        return null;
+    }
+    return game;
 }
