@@ -112,6 +112,75 @@ paths:
             operationId: id
             summary: Get full details of a Game
             description: Return full details of a given Game based on the id
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: string
+                        examples:
+                            Example of modified game:
+                                value:
+                                    id: 2
+                                    name: originalname
+                                    releaseEU: '2077'
+                                    description: küberpunk sshit
+                                    reviewscore: '3'
+                required: true
+            tags:
+                - games
+            parameters:
+                -
+                    examples:
+                        Id of game to be modified:
+                            value: '1'
+                    name: id
+                    description: id of game
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Game'
+                            examples:
+                                Example of a modified game:
+                                    value:
+                                        id: 2
+                                        name: modifiedname
+                                        releaseEU: '2077'
+                                        description: küberpunk sshit
+                                        reviewscore: '3'
+                    description: A game has been successfully modified
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: one or all params missing
+                    description: parameter was not found
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Game /w+ was not found:
+                                    value:
+                                        Error: Game not found
+                    description: Game with this id was not found
+            operationId: id
+            summary: modify existing game
+            description: Modify a single game in the app
         delete:
             tags:
                 - games
@@ -150,7 +219,6 @@ paths:
                                             error: game was not found
                     description: 'Return status code 404 to the user, if game with this id does not exist'
             operationId: id
-            summary: delete by id
             description: Delete a game with this id
 components:
     schemas:

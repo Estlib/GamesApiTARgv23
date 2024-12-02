@@ -65,7 +65,7 @@ app.put('/games/:id', (req, res) => {
     game.description = req.body.description;
     game.reviewscore = req.body.reviewscore;
     return res
-    .status(200)
+    .status(201)
     .location(`${getBaseUrl(req)}/games/${game.id}`)
     .send(game);
 })
@@ -112,7 +112,7 @@ function getGame(req,res)
 {
     const idNumber = parseInt(req.params.id);
     if(isNaN(idNumber)) {
-        res.status(400).send({Error:`Game not found!`});
+        res.status(400).send({Error:`id not found`});
         return null;
     }
     const game = games.find(game => game.id === idNumber)
