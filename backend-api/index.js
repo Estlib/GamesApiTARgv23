@@ -1,6 +1,7 @@
 
 const app = require("express")();
 const port = 8080;
+const cors = require("cors")
 const swaggerUI = require('swagger-ui-express');
 const yamljs = require('yamljs');
 /* const swaggerDocument = require('./docs/swagger.json'); */
@@ -32,6 +33,7 @@ const games =
     },
 ];
 
+app.use(cors());
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.json());
 
