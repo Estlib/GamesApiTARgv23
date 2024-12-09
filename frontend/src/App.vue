@@ -1,38 +1,9 @@
-<script>
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-import GamesTable from './components/GamesTable.vue'
 import CountInteger from './components/CountInteger.vue'
-import { RouterLink,RouterView} from 'vue-router'
 
-export default { 
-  name: 'App',
 
-  components: {
-    HelloWorld,
-    TheWelcome,
-    GamesTable,
-    CountInteger
-  },
-  data() {
-    return {
-      sectionGap: 20
-    }
-  },
-  computed: {
-    sectionGapInRem() {
-      return `${this.sectionGap / 16}rem`
-    }
-  },
-  watch: {
-    sectionGap(newVal, oldVal) {
-      if (newVal!== oldVal) {
-        this.$root.$emit('updateSectionGap', newVal)
-      }
-    }
-  }
-  
-}
 </script>
 
 <template>
@@ -45,15 +16,14 @@ export default {
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
+      <CountInteger />
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
   </header>
-
-
+  <RouterView/>
 </template>
 
 <style scoped>

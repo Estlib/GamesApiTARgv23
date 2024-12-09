@@ -1,16 +1,15 @@
 <script>
 export default {
-    props: ['count'],
     data() { 
         return { 
-            counter: this.count 
+            counter: 0 
         } 
-    }
-    
+    }    
 }
 </script>
 
 <template>
+    <button @click="counter++">AI!!! oled mind toksinud {{ counter }} korda. :c</button>
     <div id="counter">
         Counter: {{ counter }}
     </div>
