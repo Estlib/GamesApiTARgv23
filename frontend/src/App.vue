@@ -1,20 +1,59 @@
-<script setup>
+<script>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import GamesTable from './components/GamesTable.vue'
+import CountInteger from './components/CountInteger.vue'
+import { RouterLink,RouterView} from 'vue-router'
+
+export default { 
+  name: 'App',
+
+  components: {
+    HelloWorld,
+    TheWelcome,
+    GamesTable,
+    CountInteger
+  },
+  data() {
+    return {
+      sectionGap: 20
+    }
+  },
+  computed: {
+    sectionGapInRem() {
+      return `${this.sectionGap / 16}rem`
+    }
+  },
+  watch: {
+    sectionGap(newVal, oldVal) {
+      if (newVal!== oldVal) {
+        this.$root.$emit('updateSectionGap', newVal)
+      }
+    }
+  }
+  
+}
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" 
+    class="logo" 
+    src="./assets/logo.svg" 
+    width="125" 
+    height="125" />
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+
 </template>
 
 <style scoped>
