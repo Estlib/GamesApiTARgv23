@@ -1,12 +1,15 @@
-
-const app = require("express")();
-const port = 8080;
+require('dotenv').config();
+const port = process.env.PORT || 8080;
+const host = 'localhost';
+const express = require('express');
 const cors = require("cors")
 const swaggerUI = require('swagger-ui-express');
 const yamljs = require('yamljs');
 /* const swaggerDocument = require('./docs/swagger.json'); */
 const swaggerDocument = yamljs.load('./docs/swagger.yaml');
-var express = require('express')
+const app = express();
+
+const { db,sync } = require("./db")
 
 const games = 
 [
@@ -37,90 +40,14 @@ app.use(cors());
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.json());
 
-app.get('/games', (req, res) => {
-    res.send(games);
+app.get('/', (req, res) => {
+    res.send(
+        `Backend jookseb. Dokumentatsioon asub <a href="http://${host}:${port}/docs">SIIN</a>`
+    )
 })
 
-app.get('/games/:id', (req, res) => {
-    if(typeof games[req.params.id-1] === 'undefined') {
-        return res.status(404).send({Error: 'Game not found'});
-    }
-    if(typeof games[req.params.id] == null) {
-        return res.status(400).send({error: 'invalid game id'});
-    }
-    res.send(games[req.params.id-1]);
-})
+require("./routes/gameRoutes")(app)
 
-app.put('/games/:id', (req, res) => {
-    const game = getGame(req, res);
-    if(!game) {return}
-    if (!req.body.name || 
-        !req.body.releaseEU || 
-        !req.body.description || 
-        !req.body.reviewscore) 
-        {
-            return res.status(400).send({error: 'Missing game parameters'});
-        }
-        
-    game.name = req.body.name;
-    game.releaseEU = req.body.releaseEU;
-    game.description = req.body.description;
-    game.reviewscore = req.body.reviewscore;
-    return res
-    .status(201)
-    .location(`${getBaseUrl(req)}/games/${game.id}`)
-    .send(game);
-})
-
-app.post('/games', (req, res) => {
-    if (!req.body.name || 
-        !req.body.releaseEU || 
-        !req.body.description || 
-        !req.body.reviewscore) 
-        {
-            return res.status(400).send({error: 'One or multiple parameters are missing'});
-        }
-    let game = {
-        id: games.length +1,
-        name: req.body.name,
-        releaseEU: req.body.releaseEU,
-        description: req.body.description,
-        reviewscore: req.body.reviewscore
-    }
-    games.push(game);
-    res.status(201)
-    .location(`${getBaseUrl(req)}/games/${games.length}`)
-    .send(game);
-})
-
-app.delete('/games/:id', (req, res) => {
-    if(typeof games[req.params.id-1] === 'undefined')
-    {
-        return res.status(404).send({Error: 'Game not found'});
-    }
-
-    games.splice(req.params.id-1, 1);
-
-    res.status(204).send({Error: 'No Content'});
-
-})
-
-app.listen(port, () => {console.log(`Backend api jookseb aadressil: http://localhost:${port}`);});
-
-function getBaseUrl(req) {
-    return req.connection && req.connection.encrypted ? "https" : "http" + `://${req.headers.host}`;
-}
-function getGame(req,res) 
-{
-    const idNumber = parseInt(req.params.id);
-    if(isNaN(idNumber)) {
-        res.status(400).send({Error:`id not found`});
-        return null;
-    }
-    const game = games.find(game => game.id === idNumber)
-    if(!game) {
-        res.status(404).send({Error: 'Game not found'});
-        return null;
-    }
-    return game;
-}
+app.listen(port, async () => {
+    if (process.env.SYNC === 'true') {await sync();}
+    console.log(`Backend api jookseb aadressil: http://${host}:${port}`);});
