@@ -3,6 +3,7 @@ const Utils = require('./utils');
 
 exports.getAll =
 async (req, res) => {
+    const games = await db.games.findAll();
     res
     .status(200)
     .send(games

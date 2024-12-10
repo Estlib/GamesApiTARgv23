@@ -2,7 +2,7 @@
 export default {
     name: "GamesTable",
     props: {
-        items: Array
+        items: {}
     }
 }
 </script>
@@ -10,7 +10,7 @@ export default {
 <template>    
     <body>
         <table class="table table-striped table-bordered">
-            <thead>
+            <thead class="table-dark">
                 <tr>
                 <th>Game Name</th>
                 <th>Description</th>

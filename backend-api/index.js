@@ -11,30 +11,30 @@ const app = express();
 
 const { db,sync } = require("./db")
 
-const games = 
-[
-    {
-        id: 1, 
-        name: "Team Fortress 2", releaseEU : "2007", description: "Pootispencarhiar. class based lootbox shooter", reviewscore: 86
-    },
-    {
-        id: 2, 
-        name: "Sonic the Hedgehog", releaseEU : "1991", description: "Speedy blue platformer", 
-        reviewscore: 77
-    },
-    {
-        id: 3, 
-        name: "S.T.A.L.K.E.R.: Shadow of Chernobyl ", 
-        releaseEU : "2007", description: "shoot in ukraine", 
-        reviewscore: 82
-    },        
-    {
-        id: 4, 
-        name: "S.T.A.L.K.E.R. 2: Heart of Chornobyl ", 
-        releaseEU : "2007", description: "shoot in ukraine again", 
-        reviewscore: 78
-    },
-];
+// const games = 
+// [
+//     {
+//         id: 1, 
+//         name: "Team Fortress 2", releaseEU : "2007", description: "Pootispencarhiar. class based lootbox shooter", reviewscore: 86
+//     },
+//     {
+//         id: 2, 
+//         name: "Sonic the Hedgehog", releaseEU : "1991", description: "Speedy blue platformer", 
+//         reviewscore: 77
+//     },
+//     {
+//         id: 3, 
+//         name: "S.T.A.L.K.E.R.: Shadow of Chernobyl ", 
+//         releaseEU : "2007", description: "shoot in ukraine", 
+//         reviewscore: 82
+//     },        
+//     {
+//         id: 4, 
+//         name: "S.T.A.L.K.E.R. 2: Heart of Chornobyl ", 
+//         releaseEU : "2007", description: "shoot in ukraine again", 
+//         reviewscore: 78
+//     },
+// ];
 
 app.use(cors());
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
