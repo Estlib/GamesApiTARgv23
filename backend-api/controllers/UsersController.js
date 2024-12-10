@@ -38,6 +38,28 @@ async (req, res) => {
     .send(user);
 }
 
+exports.create =
+async (req, res) => {
+    if (!req.body.firstname || 
+        !req.body.lastname || 
+        !req.body.username || 
+        !req.body.password) 
+        {
+            return res.status(400).send({error: 'Missing one or all parameters'});
+        }
+const newUser = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    username: req.body.username,
+    password: req.body.password
+}
+const createdUser = await db.users.create(newUame);
+    return res
+    .status(201)
+    .location(`${Utils.getBaseUrl(req)}/users/${createdUser.id}`)
+    .send(createdUser);
+}
+
 const getUser = 
 async (req, res) => {
     const idNumber = parseInt(req.params.id);
