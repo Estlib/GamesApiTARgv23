@@ -24,6 +24,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.games = require("./models/Game")(sequelize, DataTypes);
+db.users = require("./models/User")(sequelize, DataTypes);
 
 const sync = (async () => {
     await sequelize.sync({alter: true});

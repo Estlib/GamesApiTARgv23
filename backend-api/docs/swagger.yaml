@@ -109,7 +109,6 @@ paths:
                                     value:
                                         Error: Game not found
                     description: Game was not found in array of games
-            operationId: id
             summary: Get full details of a Game
             description: Return full details of a given Game based on the id
         put:
@@ -218,8 +217,208 @@ paths:
                                         -
                                             error: game was not found
                     description: 'Return status code 404 to the user, if game with this id does not exist'
-            operationId: id
             description: Delete a game with this id
+    /users:
+        get:
+            tags:
+                - users
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                example of a list of users:
+                                    value:
+                                        -
+                                            id: '1'
+                                            firstname: wilbur
+                                            lastname: terwilliger
+                                            username: wilter
+                                            password: abrakadabra
+                                        -
+                                            id: '2'
+                                            firstname: Chrstopher
+                                            lastname: Chandler
+                                            username: sonichu
+                                            password: kiwifarms
+                                        -
+                                            id: '3'
+                                            firstname: Jack
+                                            lastname: Sparrow
+                                            username: Capn
+                                            password: jarofdirt
+                    description: Returns a list of users in app
+            summary: Get all users
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                        examples:
+                            Example of a User:
+                                value:
+                                    firstname: wilbur
+                                    lastname: terwilliger
+                                    username: wilter
+                                    password: abrakadabra
+                required: true
+            tags:
+                - users
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                            examples:
+                                Example of created User:
+                                    value:
+                                        -
+                                            id: 90
+                                            firstname: 13az0bl
+                                            lastname: ''
+                                            username: dlwcog
+                                            password: ''
+                    description: Return 201 to user when creation is successful
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: One or multiple parameters are missing
+                    description: Return status 400 to the user when addition of a user was unsuccessful
+            summary: Adds a new User
+    '/users/{id}':
+        summary: Endpoint for specific user manipulation
+        get:
+            tags:
+                - users
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                            examples:
+                                Example of a User:
+                                    value:
+                                        -
+                                            id: 71
+                                            firstname: hdea3o
+                                            lastname: a
+                                            username: 2st1
+                                            password: ''
+                    description: 'return status 200 to the user, if user exists'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                User /w+ was not found:
+                                    value:
+                                        -
+                                            error: user not found
+                    description: 'return status 404 to user, if user is not foudńd'
+            summary: Get a single USer
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+                        examples:
+                            Example of updated user:
+                                value:
+                                    -
+                                        id: 86
+                                        firstname: b
+                                        lastname: ''
+                                        username: n9u
+                                        password: '1'
+                required: true
+            tags:
+                - users
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                            examples:
+                                Example of created User:
+                                    value:
+                                        -
+                                            id: 78
+                                            firstname: l
+                                            lastname: dwv5f
+                                            username: axbk
+                                            password: myt6
+                    description: return status 201 to user when modification of user was successful
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Missing parameters:
+                                    value:
+                                        -
+                                            error: One or all parameters missing
+                    description: Return status 400 to user if one or multiple parameters are missing
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                User /w+ was not found:
+                                    value:
+                                        -
+                                            Error: user not found
+                    description: 'return status 404 to user, if user that is being modified, is no longer found.'
+            summary: Update a user
+        delete:
+            tags:
+                - users
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Example of deleted user:
+                                    value:
+                                        -
+                                            error: No Content
+                    description: 'Return status code 204 to user with error, upon successful deletion'
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                User /w+ was not found:
+                                    value:
+                                        -
+                                            error: user not found
+                    description: 'return 404 to user, if the user that is to be deleted, is no longer found'
+            summary: delete a user
+        parameters:
+            -
+                name: id
+                in: path
+                required: true
 components:
     schemas:
         error:
@@ -243,3 +442,30 @@ components:
                 releaseEU: '1985'
                 description: italian spaghetti gaem
                 reviewscore: '78'
+        User:
+            title: Root Type for User
+            description: ''
+            required:
+                - id
+                - firstname
+                - lastname
+                - password
+                - username
+            type: object
+            properties:
+                id:
+                    type: integer
+                firstname:
+                    type: string
+                lastname:
+                    type: string
+                username:
+                    type: string
+                password:
+                    type: string
+            example:
+                id: '1'
+                firstname: wilbur
+                lastname: terwilliger
+                username: wilter
+                password: abrakadabra
