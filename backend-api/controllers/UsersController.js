@@ -16,6 +16,28 @@ async (req, res) => {
     res.send(user);
 }
 
+exports.editById = 
+async (req, res) => {
+    const user = await getUser(req, res);
+    if (!user) {return}
+    if (!req.body.firstname || 
+        !req.body.lastname || 
+        !req.body.username || 
+        !req.body.password) 
+        {
+            return res.status(400).send({error: 'Missing one or all parameters'});
+        }
+    user.firstname = req.body.firstname;
+    user.lastname = req.body.lastname;
+    user.username = req.body.username;
+    user.password = req.body.password;
+    await user.save();
+    return res
+    .status(201)
+    .location(`${Utils.getBaseUrl(req)}/users/${user.id}`)
+    .send(user);
+}
+
 const getUser = 
 async (req, res) => {
     const idNumber = parseInt(req.params.id);
