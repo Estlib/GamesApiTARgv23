@@ -60,6 +60,16 @@ const createdUser = await db.users.create(newUame);
     .send(createdUser);
 }
 
+exports.deleteById = 
+async (req, res) => {
+    const user = await getUser(req, res);
+    if(!user) {return}
+    await user.destroy();
+    res.status(204).send({Error: 'No Content'});
+
+}
+
+
 const getUser = 
 async (req, res) => {
     const idNumber = parseInt(req.params.id);
