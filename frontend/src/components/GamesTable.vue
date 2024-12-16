@@ -2,7 +2,7 @@
 export default {
     name: "GamesTable",
     props: {
-        items: {}
+        items: Array
     }
 }
 </script>
@@ -14,14 +14,13 @@ export default {
                 <tr>
                 <th>Game Name</th>
                 <th>Description</th>
-                <th>Release Date EU</th>
             </tr>
             </thead>
             <tbody>
-                <tr v-for="item in items" v-bind:key="item.id">
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.releaseDateEU }}</td>
+                <tr v-for="item in items" :key="item.id">
+                    
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>                    
                 </tr>
             </tbody>
             

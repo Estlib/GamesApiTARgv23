@@ -46,6 +46,7 @@ app.get('/', (req, res) => {
     )
 })
 
+
 require("./routes/gameRoutes")(app)
 
 app.listen(port, async () => {

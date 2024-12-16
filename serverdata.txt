@@ -1,0 +1,12 @@
+database name : d113917_targv23gameapi
+database server : d113917.mysql.zonevs.eu
+database user password : gamesTARGV23
+database username : d113917_targv23appuser
+
+
+
+
+
+
+
+
