@@ -3,10 +3,11 @@ const Utils = require('./utils');
 
 exports.getAll =
 async (req, res) => {
+    const users = await db.users.findAll();
     res
     .status(200)
     .send(users
-        .map(({id, firstname, lastname}) => {return id, firstname, lastname}));
+        .map(({id, firstname, lastname}) => {return {id, firstname, lastname}}));
 }
 
 exports.getById =
@@ -53,7 +54,7 @@ const newUser = {
     username: req.body.username,
     password: req.body.password
 }
-const createdUser = await db.users.create(newUame);
+const createdUser = await db.users.create(newUser);
     return res
     .status(201)
     .location(`${Utils.getBaseUrl(req)}/users/${createdUser.id}`)

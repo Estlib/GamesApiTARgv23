@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Game = sequelize.define(
+    const User = sequelize.define(
         'User',
         {
             id: {
@@ -26,4 +26,6 @@ module.exports = (sequelize, DataTypes) => {
 
         }
     )
+    console.log(User === sequelize.models.User)
+    return User;
 }
