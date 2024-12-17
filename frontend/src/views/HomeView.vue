@@ -3,7 +3,7 @@ import GamesTable from '@/components/GamesTable.vue';
 import GameDetailsModal from '@/components/GameDetailsModal';
 import NewObjectModal from '@/components/NewObjectModal';
 import GameForm from '@/components/game/GameForm';
-import bootstrap from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.js" //
+import bootstrap from '../../src/App.vue';
 export default {
   template:`
   <button class="btn btn-secondary" @click="newGame">New Game</button>
@@ -47,7 +47,8 @@ export default {
     newGame(){
       this.error =""
       this.gameInModal = {}
-      this.newGameModal = new bootstrap.Modal(document.getElementById("newGameModal"))
+      var modalwindow = new bootstrap.Modal();
+      this.newGameModal = modalwindow(document.getElementById("newGameModal"))
       this.newGameModal.show()
     },
     updateView(game){
@@ -83,3 +84,17 @@ export default {
     <GamesTable :items="allGames"  />
   </div>
 </template> -->
+<template>
+  <button class="btn btn-secondary" @click="newGame">New Game</button>
+    
+  <GamesTable :items="allGames" :key="update" @showModal="openModal"/>
+  <GameDetailsModal @gameUpdated="updateView" :gameInModal="gameInModal"/>
+  <NewObjectModal id="newGameModal" @save="saveNewGame">
+    <GameForm 
+      v-model:name="gameInModal.name" 
+      v-model:releaseEU="releaseEU"
+      v-model:description="description"
+      v-model:reviewscore="reviewscore" />
+    <div class="alert alert-danger" role="alert" v-show="error">{{error}}</div>
+  </NewObjectModal>
+</template>
