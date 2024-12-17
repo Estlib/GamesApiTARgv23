@@ -3,6 +3,7 @@ import GamesTable from '@/components/GamesTable.vue';
 import GameDetailsModal from '@/components/GameDetailsModal';
 import NewObjectModal from '@/components/NewObjectModal';
 import GameForm from '@/components/game/GameForm';
+import bootstrap from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.js" //
 export default {
   template:`
   <button class="btn btn-secondary" @click="newGame">New Game</button>
