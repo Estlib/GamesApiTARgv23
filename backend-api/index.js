@@ -9,7 +9,7 @@ const yamljs = require('yamljs');
 const swaggerDocument = yamljs.load('./docs/swagger.yaml');
 const app = express();
 
-const { db,sync } = require("./db")
+const { sync } = require("./db")
 
 // const games = 
 // [
