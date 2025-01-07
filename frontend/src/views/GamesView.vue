@@ -1,7 +1,6 @@
 <script>
 import GamesTable from '../components/GamesTable.vue';
 export default{
-    name: "GamesTable",
     components: { GamesTable },
     data() {
         return {
@@ -10,6 +9,7 @@ export default{
     },
     async created() {
         this.allGames = await (await fetch('http://localhost:8080/games')).json();
+        /* console.log("called from gamesview");  // for debugging purposes */
     }
 }
 </script>

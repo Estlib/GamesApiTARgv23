@@ -4,7 +4,7 @@ const Utils = require('./utils');
 exports.getAll =
 async (req, res) => {
     const games = await db.games.findAll();
-    console.log(games)
+    console.log("CONTROLLER LOG"+games)
     res
     .status(200)
     .send(games
@@ -34,10 +34,10 @@ const newGame = {
     reviewscore: req.body.reviewscore
 }
 const createdGame = await db.games.create(newGame);
-    return res
-    .status(201)
+    return res/* 
+    .status(201) */
     .location(`${Utils.getBaseUrl(req)}/games/${createdGame.id}`)
-    .send(createdGame);
+    .sendStatus(201);
 }
 
 exports.editById = 

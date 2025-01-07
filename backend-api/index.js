@@ -2,12 +2,13 @@ require('dotenv').config();
 const port = process.env.PORT || 8080;
 const host = 'localhost';
 const express = require('express');
-const cors = require("cors")
+const cors = require("cors");
+const app = express();
+
 const swaggerUI = require('swagger-ui-express');
 const yamljs = require('yamljs');
 /* const swaggerDocument = require('./docs/swagger.json'); */
 const swaggerDocument = yamljs.load('./docs/swagger.yaml');
-const app = express();
 
 const { sync } = require("./db")
 
